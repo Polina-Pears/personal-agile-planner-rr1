@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Личный Agile планировщик</title>
+  <link rel="stylesheet" href="src/styles.css">
+  <script defer src="src/model.js"></script><script defer src="src/app.js"></script>
+</head>
+<body>
+  <header class="top"><div class="brand"><span class="brand-mark">A</span><span>Личный планировщик</span></div><span class="local-label">Ваше пространство задач</span></header>
+  <main>
+    <section class="intro"><div><p class="eyebrow">ЛИЧНЫЙ AGILE</p><h1>От идеи к результату</h1><p class="lead">Планируйте небольшими шагами и держите фокус на текущей работе.</p></div><button id="new-task" class="primary">+ Новая задача</button></section>
+    <div id="notice" role="status" aria-live="polite"></div>
+    <section class="stats" aria-label="Обзор задач"><div><span id="total-count">0</span>Всего задач</div><div><span id="active-count">0 / 3</span>В работе</div><div><span id="done-count">0</span>Завершено</div><div><span id="done-points">0</span>Баллов выполнено</div></section>
+    <section class="toolbar" aria-label="Фильтры и данные">
+      <label>Спринт<select id="sprint-filter"><option value="all">Все задачи</option><option value="none">Без спринта</option></select></label>
+      <label>Приоритет<select id="priority-filter"><option value="all">Любой приоритет</option><option value="high">Высокий</option><option value="normal">Обычный</option><option value="low">Низкий</option></select></label>
+      <button id="new-sprint">+ Спринт</button><div class="spacer"></div><button id="export">Экспорт</button><button id="import">Импорт</button><input id="import-file" type="file" accept=".json,application/json" hidden>
+    </section>
+    <p id="sprint-info" class="sprint-info">Все задачи · В работе одновременно не более 3 задач</p>
+    <section class="board" aria-label="Доска задач">
+      <section class="column"><h2>Бэклог <span id="count-backlog">0</span></h2><div id="list-backlog" class="cards"></div></section>
+      <section class="column"><h2>К выполнению <span id="count-todo">0</span></h2><div id="list-todo" class="cards"></div></section>
+      <section class="column progress"><h2>В работе <span id="count-progress">0</span></h2><div id="list-progress" class="cards"></div></section>
+      <section class="column done"><h2>Готово <span id="count-done">0</span></h2><div id="list-done" class="cards"></div></section>
+    </section>
+    <footer>Данные сохраняются в этом браузере. Экспортируйте копию, чтобы перенести задачи на другое устройство.</footer>
+  </main>
+  <dialog id="task-dialog"><form id="task-form"><div class="dialog-heading"><h2 id="task-heading">Новая задача</h2><button type="button" data-close="task-dialog" aria-label="Закрыть задачу">×</button></div>
+    <input id="task-id" type="hidden">
+    <label>Название задачи<input id="task-title" required maxlength="120" autocomplete="off"></label>
+    <label>Описание<textarea id="task-description" maxlength="2000" rows="3"></textarea></label>
+    <div class="form-grid"><label>Приоритет<select id="task-priority"><option value="normal">Обычный</option><option value="high">Высокий</option><option value="low">Низкий</option></select></label><label>Оценка в баллах<select id="task-points"><option>0</option><option>1</option><option>2</option><option>3</option><option>5</option><option>8</option><option>13</option></select></label></div>
+    <div class="form-grid"><label>Статус<select id="task-status"><option value="backlog">Бэклог</option><option value="todo">К выполнению</option><option value="progress">В работе</option><option value="done">Готово</option></select></label><label>Спринт задачи<select id="task-sprint"><option value="">Без спринта</option></select></label></div>
+    <p id="task-error" class="error" role="alert"></p><div class="dialog-actions"><button type="button" data-close="task-dialog">Отмена</button><button type="submit" class="primary">Сохранить задачу</button></div>
+  </form></dialog>
+  <dialog id="sprint-dialog"><form id="sprint-form"><div class="dialog-heading"><h2>Новый спринт</h2><button type="button" data-close="sprint-dialog" aria-label="Закрыть спринт">×</button></div>
+    <label>Название спринта<input id="sprint-name" required maxlength="80"></label><div class="form-grid"><label>Начало спринта<input id="sprint-start" type="date" required></label><label>Конец спринта<input id="sprint-end" type="date" required></label></div><p id="sprint-error" class="error" role="alert"></p><div class="dialog-actions"><button type="button" data-close="sprint-dialog">Отмена</button><button type="submit" class="primary">Создать спринт</button></div>
+  </form></dialog>
+</body></html>
